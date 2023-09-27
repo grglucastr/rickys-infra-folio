@@ -59,7 +59,7 @@ resource "aws_s3_bucket_policy" "rickys_website_policy" {
 data "aws_iam_policy_document" "rickys_website_policy_document" {
   statement {
     principals {
-      type        = "AWS"
+      type        = "*"
       identifiers = ["*"]
     }
 
@@ -110,13 +110,13 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     max_ttl                = 86400
   }
 
-  price_class = "PriceClass_200"
+  price_class = "PriceClass_All"
 
   
   restrictions {
     geo_restriction {
-      restriction_type = "whitelist"
-      locations        = ["US", "CA", "GB", "DE", "BR", "AR"]
+      restriction_type = "none"
+      locations        = []
     }
   }
 
