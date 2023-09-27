@@ -59,7 +59,7 @@ resource "aws_s3_bucket_policy" "rickys_website_policy" {
 data "aws_iam_policy_document" "rickys_website_policy_document" {
   statement {
     principals {
-      type        = "AWS"
+      type        = "*"
       identifiers = ["*"]
     }
 
