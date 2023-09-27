@@ -25,7 +25,8 @@ data "aws_iam_policy_document" "rickys_website_policy_document" {
     }
     
     actions = [
-      "s3:GetObject"
+      "s3:GetObject",
+      "s3:PutObject"
     ]
 
     resources = [
