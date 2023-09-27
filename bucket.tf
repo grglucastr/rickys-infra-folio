@@ -8,6 +8,13 @@ resource "aws_s3_bucket_policy" "rickys_website_policy" {
   policy = data.aws_iam_policy_document.rickys_website_policy_document.json
 }
 
+resource "aws_s3_object" "placeholder_file" {
+  bucket = var.bucket_name
+  key    = "placeholder_file"
+  source = "index.html"
+  etag = filemd5("index.html")
+}
+
 data "aws_iam_policy_document" "rickys_website_policy_document" {
   statement {
 
