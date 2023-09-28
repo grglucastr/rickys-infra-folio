@@ -9,10 +9,10 @@ resource "aws_s3_bucket_policy" "rickys_website_policy" {
 }
 
 resource "aws_s3_object" "placeholder_file" {
-  bucket = var.bucket_name
-  key    = "index.html"
-  source = "index.html"
-  etag = filemd5("index.html")
+  bucket  = aws_s3_bucket.rickys_website.arn
+  key     = "index.html"
+  source  = "index.html"
+  etag    = filemd5("index.html")
 }
 
 data "aws_iam_policy_document" "rickys_website_policy_document" {
