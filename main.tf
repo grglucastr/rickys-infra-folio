@@ -20,6 +20,7 @@ resource "heroku_app" "bennun_app_terraform" {
 
 resource "heroku_build" "bennun_app_build" {
   app_id = heroku_app.bennun_app_terraform.id
+  buildpacks = [ "https://github.com/heroku/heroku-buildpack-php" ]
 
   source {
     # A local directory, changing its contents will

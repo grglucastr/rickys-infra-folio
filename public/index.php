@@ -37,5 +37,6 @@
   <p><em>This is a placeholder page</em></p>
   <hr>
   <h3>Please run your code pipeline pointing to this S3 bucket location in order to replace this placeholder file.</h3>
+  <?php echo "Copyright - " . date('Y')?>
 </body>
 </html>
