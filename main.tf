@@ -33,6 +33,6 @@ resource "heroku_formation" "bennun_formation" {
   app_id     = heroku_app.bennun_app_terraform.id
   type       = "web"
   quantity   = 1
-  size       = "Standard-1x"
+  size       = "eco"
   depends_on = ["heroku_build.bennun_app_build"]
 }
