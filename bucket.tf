@@ -9,7 +9,7 @@ resource "aws_s3_bucket_policy" "rickys_website_policy" {
 }
 
 resource "aws_s3_object" "placeholder_file" {
-  bucket  = aws_s3_bucket.rickys_website.arn
+  bucket  = aws_s3_bucket.rickys_website.id
   key     = "index.html"
   source  = "index.html"
   etag    = filemd5("index.html")
