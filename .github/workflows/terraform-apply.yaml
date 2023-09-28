@@ -3,7 +3,7 @@ name: "Terraform Apply"
 on:
   push:
     branches:
-      - heroku-master
+      - master-heroku
 
 env:
   TF_CLOUD_ORGANIZATION: "bennun-labs"
