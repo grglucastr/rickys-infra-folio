@@ -7,7 +7,7 @@ on:
 env:
   TF_CLOUD_ORGANIZATION: "bennun-labs"
   TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
-  TF_WORKSPACE: "rickys-infra-folio-heroku"
+  TF_WORKSPACE: "rickys-infra-folio"
   CONFIG_DIRECTORY: "./"
 
 jobs:
