@@ -1,4 +1,4 @@
-name: "Terraform plan"
+name: "Terraform Plan"
 
 on:
   pull_request:
@@ -12,7 +12,6 @@ env:
 
 jobs:
   terraform:
-    if: github.repository != 'hashicorp-education/learn-terraform-github-actions'
     name: "Terraform Plan"
     runs-on: ubuntu-latest
     steps:

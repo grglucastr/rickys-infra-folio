@@ -1,12 +1,19 @@
 terraform {
   required_providers {
-    aws = {
-      source  = "hashicorp/aws"
+    heroku = {
+      source  = "heroku/heroku"
       version = "~> 5.0"
     }
   }
 }
 
-provider "aws" {
-  region = "us-east-1"
+
+variable "app_name" {
+  default = "bennun-terraform-example"
+  description = "Name of the Heroku app provisioned as an example"
+}
+
+resource "heroku_app" "bennun-app-terraform" {
+  name   = var.app_name
+  region = "us"
 }
