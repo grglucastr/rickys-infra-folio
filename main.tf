@@ -7,32 +7,26 @@ terraform {
   }
 }
 
-
-variable "app_name" {
-  default = "bennun-terraform-example"
-  description = "Name of the Heroku app provisioned as an example"
-}
-
-resource "heroku_app" "bennun_app_terraform" {
-  name   = var.app_name
-  region = "us"
+resource "heroku_app" "bennun_app" {
+  name   = var.bennun_app_name
+  region = var.region
 }
 
 resource "heroku_build" "bennun_app_build" {
-  app_id = heroku_app.bennun_app_terraform.id
-  buildpacks = [ "https://github.com/heroku/heroku-buildpack-php" ]
+  app_id = heroku_app.bennun_app.id
+  buildpacks = [ "https://github.com/heroku/heroku-buildpack-php" ] # as soons as the website has PHP scripts on it
 
   source {
-    # A local directory, changing its contents will
-    # force a new build during `terraform apply`
     path = "./public"
   }
 }
 
-resource "heroku_formation" "bennun_formation" {
-  app_id     = heroku_app.bennun_app_terraform.id
-  type       = "web"
-  quantity   = 1
-  size       = "eco"
-  depends_on = ["heroku_build.bennun_app_build"]
+resource "heroku_domain" "bennun_app_domain" {
+  app_id   = heroku_app.bennun_app.id
+  hostname = var.hostname1
+}
+
+resource "heroku_domain" "bennun_app_domain2" {
+  app_id   = heroku_app.bennun_app.id
+  hostname = var.hostname2
 }

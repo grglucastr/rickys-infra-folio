@@ -33,10 +33,10 @@
 </head>
 <body bgcolor="#bebebe">
   <h4><a href="#">Bennun Labs</a></h4>
-  <h1>Cloudfront + S3 Bucket structure are successfully deployed!</h1>
-  <p><em>This is a placeholder page</em></p>
+  <h1>Heroku app structure are successfully deployed!</h1>
+  <p><em>This is a placeholder page developed in PHP</em></p>
   <hr>
-  <h3>Please run your code pipeline pointing to this S3 bucket location in order to replace this placeholder file.</h3>
+  <h3>Please run your code pipeline pointing to this app in order to replace this placeholder file.</h3>
   <?php echo "Copyright - " . date('Y')?>
 </body>
 </html>
