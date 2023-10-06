@@ -15,6 +15,19 @@ resource "aws_s3_object" "placeholder_file" {
   content_type    = "text/html"
 }
 
+resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
+  bucket = aws_s3_bucket.rickys_website.id
+  rule {
+    id = "storage_class_rule"
+    status = "Enabled"
+    transition {
+      days = 30
+      storage_class = "ONEZONE_IA"
+    }
+  }
+  
+}
+
 data "aws_iam_policy_document" "rickys_website_policy_document" {
   statement {
 
