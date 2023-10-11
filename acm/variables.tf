@@ -1,3 +1,3 @@
 variable "domain_name" {
-  default = "*.rickys-data.today"
+  default = "rickys-data.today"
 }
