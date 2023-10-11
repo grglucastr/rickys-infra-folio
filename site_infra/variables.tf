@@ -1,3 +1,7 @@
 variable "certificate_arn" {
   default = "arn:aws:acm:us-east-1:947434607925:certificate/c19ccf97-5da2-4a94-80e5-9d2296f376f4"
 }
+
+variable "cloudfront_comment" {
+  default = "Rickys Website CloudFront"
+}
