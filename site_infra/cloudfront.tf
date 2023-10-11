@@ -1,9 +1,5 @@
-locals {
-  s3_origin_id = "rickysS3origin"
-}
-
-resource "aws_cloudfront_origin_access_control" "rickys_website_origin_access_control" {
-  name                              = aws_s3_bucket.rickys_website.bucket_domain_name
+resource "aws_cloudfront_origin_access_control" "project_origin_access_control" {
+  name                              = aws_s3_bucket.project_bucket.bucket_domain_name
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
@@ -11,21 +7,21 @@ resource "aws_cloudfront_origin_access_control" "rickys_website_origin_access_co
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
 
-  depends_on = [ aws_s3_bucket.rickys_website ]
+  depends_on = [ aws_s3_bucket.project_bucket ]
 
   origin {
-    domain_name              = aws_s3_bucket.rickys_website.bucket_regional_domain_name
+    domain_name              = aws_s3_bucket.project_bucket.bucket_regional_domain_name
     origin_id                = local.s3_origin_id
-    origin_access_control_id = aws_cloudfront_origin_access_control.rickys_website_origin_access_control.id
+    origin_access_control_id = aws_cloudfront_origin_access_control.project_origin_access_control.id
   }
 
   enabled             = true
   is_ipv6_enabled     = true
-  comment             = "Rickys Website CloudFront"
+  comment             = var.cloudfront_comment
   default_root_object = "index.html"
 
 
-  aliases = ["www.rickys-data.today", "rickys-data.today"] #https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html#alternate-domain-names-requirements
+  aliases = ["*.rickys-data.today"] #https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html#alternate-domain-names-requirements
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
