@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "project_bucket" {
-  bucket = var.bucket_name
+  bucket = local.bucket_name
 }
 
 resource "aws_s3_bucket_policy" "project_bucket_policy" {

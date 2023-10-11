@@ -5,8 +5,17 @@ terraform {
       version = "~> 5.0"
     }
   }
+
+  # comment this line when working with terraform locally
+  # cloud { }
+
+  required_version = ">= 1.1.0"
 }
 
 provider "aws" {
   region = "us-east-1"
+}
+
+locals {
+  bucket_name = "bennun-labs-rickys-website"
 }
