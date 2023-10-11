@@ -1,22 +1,22 @@
-resource "aws_s3_bucket" "rickys_website" {
+resource "aws_s3_bucket" "project_bucket" {
   bucket = var.bucket_name
 }
 
-resource "aws_s3_bucket_policy" "rickys_website_policy" {
+resource "aws_s3_bucket_policy" "project_bucket_policy" {
   depends_on = [ aws_cloudfront_distribution.s3_distribution ]
-  bucket = aws_s3_bucket.rickys_website.id
-  policy = data.aws_iam_policy_document.rickys_website_policy_document.json
+  bucket = aws_s3_bucket.project_bucket.id
+  policy = data.aws_iam_policy_document.project_bucket_policy_document.json
 }
 
 resource "aws_s3_object" "placeholder_file" {
-  bucket          = aws_s3_bucket.rickys_website.id
+  bucket          = aws_s3_bucket.project_bucket.id
   key             = "index.html"
   source          = "index.html"
   content_type    = "text/html"
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
-  bucket = aws_s3_bucket.rickys_website.id
+  bucket = aws_s3_bucket.project_bucket.id
   rule {
     id = "storage_class_rule"
     status = "Enabled"
@@ -28,7 +28,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
   
 }
 
-data "aws_iam_policy_document" "rickys_website_policy_document" {
+data "aws_iam_policy_document" "project_bucket_policy_document" {
   statement {
 
     sid = "AllowCloudFrontServicePrincipal"
@@ -43,7 +43,7 @@ data "aws_iam_policy_document" "rickys_website_policy_document" {
     ]
 
     resources = [
-      "${aws_s3_bucket.rickys_website.arn}/*"
+      "${aws_s3_bucket.project_bucket.arn}/*"
     ]
 
     condition {
