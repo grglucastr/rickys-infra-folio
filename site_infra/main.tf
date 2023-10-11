@@ -17,5 +17,6 @@ provider "aws" {
 }
 
 locals {
-  bucket_name = "bennun-labs-rickys-website"
+  bucket_name         = "bennun-labs-rickys-website"
+  s3_origin_id        = "rickysS3origin"
 }
