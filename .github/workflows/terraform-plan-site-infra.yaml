@@ -12,7 +12,6 @@ env:
 
 jobs:
   terraform:
-    if: github.ref == 'refs/heads/plan'
     name: "Terraform Plan"
     runs-on: ubuntu-latest
     steps:
