@@ -16,7 +16,7 @@ env:
 
 jobs:
   terraform:
-    if: github.repository != 'hashicorp-education/learn-terraform-github-actions'
+    if: github.ref == 'refs/heads/master'
     name: "Terraform Apply"
     runs-on: ubuntu-latest
     permissions:
