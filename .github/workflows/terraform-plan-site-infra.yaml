@@ -40,7 +40,7 @@ jobs:
         id: plan
         run: |
           export TF_VAR_CLOUDFRONT_CERTIFICATE_ARN=arn:aws:sns:us-east-1:123456789012:example-sns-topic-name #placeholder only
-          terraform plan
+          terraform plan -no-color
         continue-on-error: true
 
       - uses: actions/github-script@v6
