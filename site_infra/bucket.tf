@@ -8,11 +8,11 @@ resource "aws_s3_bucket_policy" "project_bucket_policy" {
   policy = data.aws_iam_policy_document.project_bucket_policy_document.json
 }
 
-resource "aws_s3_object" "placeholder_file" {
-  bucket          = aws_s3_bucket.project_bucket.id
-  key             = "index.html"
-  source          = "index.html"
-  content_type    = "text/html"
+
+resource "null_resource" "remove_and_upload_to_s3" {
+  provisioner "local-exec" {
+    command = "aws s3 sync ${path.module}/public s3://${aws_s3_bucket.project_bucket.id}"
+  }
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
