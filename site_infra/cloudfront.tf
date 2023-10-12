@@ -60,5 +60,6 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     acm_certificate_arn = var.CLOUDFRONT_CERTIFICATE_ARN
     ssl_support_method = var.cloudfront_ssl_support_method
     minimum_protocol_version = var.cloudfront_minimum_protocol_version
+    #cloudfront_default_certificate = true
   }
 }
