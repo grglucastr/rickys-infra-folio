@@ -63,7 +63,7 @@ jobs:
             });
             const output = `#### Terraform Cloud Plan Output for site infrastructure
                \`\`\`
-               Plan: ${{ steps.outputs.add }} to add, ${{ steps.outputs.change }} to change, ${{ steps.outputs.destroy }} to destroy.
+               Plan: ${{ steps.plan.outputs.add }} to add, ${{ steps.plan.outputs.change }} to change, ${{ steps.plan.outputs.destroy }} to destroy.
                \`\`\`
                [Terraform Cloud Plan](${{ steps.plan.outputs.run_link }})
                `;
