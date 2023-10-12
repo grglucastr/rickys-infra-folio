@@ -37,12 +37,12 @@ jobs:
         id: plan
         run: |
           export TF_VAR_CLOUDFRONT_CERTIFICATE_ARN="This value will be provided when running on branch Master. For now, it is just planning."
-          terraform plan -no-color
+          terraform plan
         continue-on-error: true
 
       - name: Plan Outputs
         id: plan-outputs
-        run: terraform output -raw
+        run: terraform output
       
       - run: echo ${{ steps.plan-outputs.outputs.stdout }}
       - run: echo ${{ steps.plan-outputs.outputs.stderr }}
