@@ -12,7 +12,7 @@ env:
 
 jobs:
   terraform:
-    if: github.base_ref == 'refs/heads/plan'
+    if: github.head_ref == 'plan' #check if current branch is: plan
     name: "Terraform Plan"
     runs-on: ubuntu-latest
     steps:
