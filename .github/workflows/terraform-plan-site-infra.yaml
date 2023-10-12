@@ -66,9 +66,7 @@ jobs:
             });
             const output = `#### Terraform Cloud Plan Output for site infrastructure
                \`\`\`
-               FROM JSON: ${{steps.plan.outputs}}
-               \`\`\`
-               CONSOLE LOG: ${{console.log(steps.plan.outputs)}}
+               FROM JSON: ${{fromJSON(steps.plan.outputs)}}
                \`\`\`
                [Terraform Cloud Plan](${{ steps.plan.outputs.run_link }})
                `;
