@@ -12,13 +12,16 @@ env:
 
 jobs:
   terraform:
-    if: ${{github.base_ref == 'refs/heads/plan'}}
     name: "Terraform Plan"
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ${{env.CONFIG_DIRECTORY}}
     steps:
+
+      - run: echo ${{ github.event.pull_request.base.ref }}
+      - run: echo ${{ github.base_ref }}
+      - run: echo ${{ github.head_ref }}
 
       - name: Checkout
         uses: actions/checkout@v3
