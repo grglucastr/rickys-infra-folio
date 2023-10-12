@@ -64,11 +64,7 @@ jobs:
             });
             const output = `#### Terraform Cloud Plan Output for site infrastructure
                \`\`\`
-               RAW: ${process.env.RAW}
-               \`\`\`
-               Plan: ${process.env.PLAN}
-               \`\`\`
-               Payload: ${process.env.PAYLOAD}
+               FROM JSON: ${{ fromJSON(steps.plan.outputs.payload).data }}
                \`\`\`
                [Terraform Cloud Plan](${{ steps.plan.outputs.run_link }})
                `;
