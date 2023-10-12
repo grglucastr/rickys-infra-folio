@@ -5,9 +5,9 @@ on:
     
 
 env:
-  TF_CLOUD_ORGANIZATION: ${{ vars.TF_ORGANIZATION }}
+  TF_CLOUD_ORGANIZATION: ${{ vars.TF_ORGANIZATION }} # repository variable
   TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
-  TF_WORKSPACE: ${{ vars.TF_WORKSPACE }}
+  TF_WORKSPACE: ${{ vars.TF_WORKSPACE }} # repository variable
   CONFIG_DIRECTORY: "./acm"
 
 jobs:
@@ -57,7 +57,7 @@ jobs:
             const botComment = comments.find(comment => {
               return comment.user.type === 'Bot' && comment.body.includes('Terraform Cloud Plan Output')
             });
-            const output = `#### Terraform Cloud Plan Output
+            const output = `#### Terraform Cloud Plan Output for Certificate AWS ACM
                \`\`\`
                Plan: ${{ steps.plan-output.outputs.add }} to add, ${{ steps.plan-output.outputs.change }} to change, ${{ steps.plan-output.outputs.destroy }} to destroy.
                \`\`\`
