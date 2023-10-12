@@ -11,7 +11,7 @@ terraform {
   }
   
   # comment this line when working with terraform locally
-  #cloud { }
+  cloud { }
 
   required_version = ">= 1.1.0"
 }
