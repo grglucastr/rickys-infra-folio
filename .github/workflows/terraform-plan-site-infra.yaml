@@ -14,6 +14,9 @@ jobs:
   terraform:
     name: "Terraform Plan"
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{env.CONFIG_DIRECTORY}}
     steps:
 
       - name: Checkout
