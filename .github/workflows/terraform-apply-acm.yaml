@@ -41,6 +41,10 @@ jobs:
         id: apply
         run: terraform apply -auto-approve -input=false
 
-      - name: Terraform outputs
+      - name: Terraform outputs (Important! Check this out!)
         id: outputs
-        run: terraform output
+        run:  |
+          echo "Use these values to configure your DNS server. Add these values to your DNS database."
+          echo "ATTENTION!!! If you use GoDaddy, please check this out: https://docs.aws.amazon.com/acm/latest/userguide/troubleshooting-DNS-validation.html#troubleshooting-DNS-GoDaddy"
+          echo "After set the values to you DNS server, please, wait until AWS finish validate the certificates."
+          terraform output
