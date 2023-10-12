@@ -12,7 +12,7 @@ env:
 
 jobs:
   terraform:
-    if: github.repository != 'hashicorp-education/learn-terraform-github-actions'
+    if: github.ref == 'refs/heads/plan'
     name: "Terraform Plan"
     runs-on: ubuntu-latest
     steps:

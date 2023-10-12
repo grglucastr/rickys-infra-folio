@@ -39,6 +39,47 @@ jobs:
         run: terraform validate
 
       - name: Terraform apply
+        id: apply
         run: |
           export TF_VAR_CLOUDFRONT_CERTIFICATE_ARN=${{ github.event.inputs.certificate_arn }}
           terraform apply -auto-approve -input=false
+
+      - name: Update PR
+        uses: actions/github-script@v6
+        id: apply-comment
+        env:
+          PLAN: "Terraform \n${{steps.apply.outputs.stdout}}"
+          RAW: "Terraform \n${{steps.apply.outputs}}"
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          script: |
+            // 1. Retrieve existing bot comments for the PR
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const botComment = comments.find(comment => {
+              return comment.user.type === 'Bot' && comment.body.includes('Terraform Cloud Plan Output')
+            });
+            const output = `#### Terraform Cloud Apply Output for site infrastructure
+               \`\`\`
+               RAW: ${process.env.RAW}
+               \`\`\`
+               Outputs: ${process.env.PLAN}
+               \`\`\`
+               `;
+            // 3. Delete previous comment so PR timeline makes sense
+            if (botComment) {
+              github.rest.issues.deleteComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+              });
+            }
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            });
