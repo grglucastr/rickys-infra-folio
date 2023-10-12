@@ -12,7 +12,7 @@ env:
 
 jobs:
   terraform:
-    if: github.base_ref == 'refs/heads/plan'
+    if: ${{github.base_ref == 'refs/heads/plan'}}
     name: "Terraform Plan"
     runs-on: ubuntu-latest
     defaults:
