@@ -1,0 +1,22 @@
+body{
+  background: url("../images/clouds.jpg") no-repeat;
+  background-size: cover;
+  font-family: sans-serif;
+}
+
+h1, h2, h3, h4{
+  color: #fff;
+}
+
+h1, h3, p{
+  text-align: center;
+}
+
+a:visited, a:link{
+  color: #fff;
+  text-decoration: none;
+}
+
+a:hover{
+  color: #dcf3ff;
+}

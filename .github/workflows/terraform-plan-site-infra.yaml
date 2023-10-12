@@ -1,50 +1,51 @@
-name: "Terraform plan"
+name: "Terraform plan site infrastructure"
 
 on:
   pull_request:
     
 
 env:
-  TF_CLOUD_ORGANIZATION: "bennun-labs"
+  TF_CLOUD_ORGANIZATION: ${{ vars.TF_ORGANIZATION }} # repository variable
   TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
-  TF_WORKSPACE: "rickys-infra-folio"
-  CONFIG_DIRECTORY: "./"
+  TF_WORKSPACE: ${{ vars.TF_WORKSPACE }} # repository variable
+  CONFIG_DIRECTORY: "./site-infra"
 
 jobs:
   terraform:
-    if: github.repository != 'hashicorp-education/learn-terraform-github-actions'
+    if: github.ref == 'refs/heads/plan'
     name: "Terraform Plan"
     runs-on: ubuntu-latest
     steps:
 
       - name: Checkout
         uses: actions/checkout@v3
-      
-      - name: Upload Configuration
-        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
-        id: plan-upload
-        with:
-          workspace: ${{ env.TF_WORKSPACE }}
-          directory: ${{ env.CONFIG_DIRECTORY }}
-          speculative: true
 
-      - name: Create Plan Run
-        uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2.0.3 
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform init
+        id: init
+        run: terraform init
+
+      - name: Terraform validate
+        id: validate
+        run: terraform validate
+
+      - name: Terraform plan
         id: plan-run
-        with:
-          workspace: ${{ env.TF_WORKSPACE }}
-          configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
-          plan_only: true
-
-      - name: Get Plan Output
-        uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
-        id: plan-output
-        with:
-          plan: ${{ fromJSON(steps.plan-run.outputs.payload).data.relationships.plan.data.id }}
+        run: 
+          export TF_VAR_CLOUDFRONT_CERTIFICATE_ARN="This value will be provided when running on branch Master. For now, it is just planning."
+          terraform plan
+        continue-on-error: true
 
       - name: Update PR
         uses: actions/github-script@v6
         id: plan-comment
+        env:
+          PLAN: "Terraform \n${{steps.plan-run.outputs.stdout}}"
+          RAW: "Terraform \n${{steps.plan-run.outputs}}"
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           script: |
@@ -57,9 +58,11 @@ jobs:
             const botComment = comments.find(comment => {
               return comment.user.type === 'Bot' && comment.body.includes('Terraform Cloud Plan Output')
             });
-            const output = `#### Terraform Cloud Plan Output
+            const output = `#### Terraform Cloud Plan Output for site infrastructure
                \`\`\`
-               Plan: ${{ steps.plan-output.outputs.add }} to add, ${{ steps.plan-output.outputs.change }} to change, ${{ steps.plan-output.outputs.destroy }} to destroy.
+               RAW: ${process.env.RAW}
+               \`\`\`
+               Plan: ${process.env.PLAN}
                \`\`\`
                [Terraform Cloud Plan](${{ steps.plan-run.outputs.run_link }})
                `;

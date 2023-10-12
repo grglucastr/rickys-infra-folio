@@ -4,3 +4,6 @@
 
 terraform.tfstate
 terraform.tfstate.backup
+
+acm/.terraform/*
+site_infra/.terraform/*
