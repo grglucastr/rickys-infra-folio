@@ -68,6 +68,8 @@ jobs:
                \`\`\`
                FROM JSON: ${{steps.plan.outputs}}
                \`\`\`
+               CONSOLE LOG: ${{console.log(steps.plan.outputs)}}
+               \`\`\`
                [Terraform Cloud Plan](${{ steps.plan.outputs.run_link }})
                `;
             // 3. Delete previous comment so PR timeline makes sense
