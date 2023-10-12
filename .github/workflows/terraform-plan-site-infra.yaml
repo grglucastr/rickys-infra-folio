@@ -26,7 +26,6 @@ jobs:
         uses: hashicorp/setup-terraform@v2.0.3 
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-          terraform_wrapper: false
 
       - name: Terraform init
         id: init
@@ -39,7 +38,7 @@ jobs:
       - name: Terraform plan
         id: plan
         run: |
-          export TF_VAR_CLOUDFRONT_CERTIFICATE_ARN="This value will be provided when running on branch Master. For now, it is just planning."
+          export TF_VAR_CLOUDFRONT_CERTIFICATE_ARN=arn:aws:sns:us-east-1:123456789012:example-sns-topic-name #placeholder only
           terraform plan
         continue-on-error: true
 
