@@ -1,0 +1,44 @@
+name: "Terraform Apply"
+
+on:
+  workflow_dispatch:
+    inputs:
+      certificate_arn:
+        type: string
+        required: true
+        description: "Inform Certificate ARN generated in the AWS Certificate Manager workflow"
+
+env:
+  TF_CLOUD_ORGANIZATION: ${{ vars.TF_ORGANIZATION }} # repository variable
+  TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
+  TF_WORKSPACE: ${{ vars.TF_WORKSPACE }} # repository variable
+  CONFIG_DIRECTORY: "./site_infra"
+
+jobs:
+  terraform:
+    if: github.repository != 'hashicorp-education/learn-terraform-github-actions'
+    name: "Terraform Apply"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2.0.3 
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform init
+        id: init
+        run: terraform init
+
+      - name: Terraform validate
+        id: validate
+        run: terraform validate
+
+      - name: Terraform apply
+        run: |
+          export TF_VAR_CLOUDFRONT_CERTIFICATE_ARN=${{ github.event.inputs.certificate_arn }}
+          terraform apply -auto-approve -input=false

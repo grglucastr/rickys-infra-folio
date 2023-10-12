@@ -1,4 +1,4 @@
-name: "Terraform Apply"
+name: "Terraform Apply AWS Certificate Manager workflow"
 
 on:
   push:
@@ -6,10 +6,10 @@ on:
       - master
 
 env:
-  TF_CLOUD_ORGANIZATION: "bennun-labs"
+  TF_CLOUD_ORGANIZATION: ${{ vars.TF_ORGANIZATION }} # repository variable
   TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
-  TF_WORKSPACE: "rickys-infra-folio"
-  CONFIG_DIRECTORY: "./"
+  TF_WORKSPACE: ${{ vars.TF_WORKSPACE }} # repository variable
+  CONFIG_DIRECTORY: "./acm"
 
 jobs:
   terraform:
