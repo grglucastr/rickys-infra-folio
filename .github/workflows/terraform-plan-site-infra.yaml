@@ -42,7 +42,11 @@ jobs:
           terraform plan
         continue-on-error: true
 
-      - run: echo ${{ steps.plan.outputs }}
+      - name: Get Plan Output
+        uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
+        id: plan-output
+        with:
+          plan: ${{ fromJSON(steps.plan.outputs.payload).data.relationships.plan.data.id }}
 
       - name: Update PR
         uses: actions/github-script@v6
@@ -65,7 +69,7 @@ jobs:
             });
             const output = `#### Terraform Cloud Plan Output for site infrastructure
                \`\`\`
-               Plan: ${{ steps.plan.outputs.add }} to add, ${{ steps.plan.outputs.change }} to change, ${{ steps.plan.outputs.destroy }} to destroy.
+               Plan: ${{ steps.plan-output.outputs.add }} to add, ${{ steps.plan-output.outputs.change }} to change, ${{ steps.plan-output.outputs.destroy }} to destroy.
                \`\`\`
                [Terraform Cloud Plan](${{ steps.plan.outputs.run_link }})
                `;
