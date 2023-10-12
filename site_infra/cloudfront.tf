@@ -18,10 +18,10 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   enabled             = true
   is_ipv6_enabled     = true
   comment             = var.cloudfront_comment
-  default_root_object = "index.html"
+  default_root_object = var.cloudfront_default_root_object
 
 
-  aliases = ["rickys-data.today"] #https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html#alternate-domain-names-requirements
+  aliases = var.cloudfront_aliases #https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html#alternate-domain-names-requirements
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
@@ -36,13 +36,13 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
       }
     }
 
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = var.cloudfront_viewer_protocol_policy
     min_ttl                = 0
     default_ttl            = 3600
     max_ttl                = 86400
   }
 
-  price_class = "PriceClass_All"
+  price_class = var.cloudfront_price_class
 
   
   restrictions {
@@ -57,7 +57,8 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = var.certificate_arn
-    ssl_support_method = "sni-only"
+    acm_certificate_arn = var.CLOUDFRONT_CERTIFICATE_ARN
+    ssl_support_method = var.cloudfront_ssl_support_method
+    minimum_protocol_version = var.cloudfront_minimum_protocol_version
   }
 }
