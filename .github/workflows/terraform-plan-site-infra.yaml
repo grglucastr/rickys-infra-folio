@@ -35,7 +35,7 @@ jobs:
 
       - name: Terraform plan
         id: plan
-        run: 
+        run: |
           export TF_VAR_CLOUDFRONT_CERTIFICATE_ARN="This value will be provided when running on branch Master. For now, it is just planning."
           terraform plan -no-color
         continue-on-error: true
