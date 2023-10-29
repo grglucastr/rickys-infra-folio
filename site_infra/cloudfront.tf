@@ -21,7 +21,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   default_root_object = var.cloudfront_default_root_object
 
 
-  aliases = var.cloudfront_aliases #https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html#alternate-domain-names-requirements
+  #aliases = var.cloudfront_aliases #https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html#alternate-domain-names-requirements
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
