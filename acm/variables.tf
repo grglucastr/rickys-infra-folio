@@ -1,8 +1,13 @@
 variable "domain_name" {
-  default = "*.rickys-data.today"
+  default = "*.ricardosantins.xyz"
 }
 
 variable "domain_alternative_names" {
   type = list(string)
-  default = ["www.rickys-data.today","rickys-data.today"]
+  default = [
+    "www.ricardosantins.xyz", 
+    "ricardosantins.xyz",
+    "www.rickys-data.today",
+    "rickys-data.today"
+    ]
 }
