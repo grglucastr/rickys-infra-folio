@@ -7,6 +7,7 @@ variable "domain_alternative_names" {
   default = [
     "www.ricardosantins.xyz", 
     "www.rickys-data.today",
+    "ricardosantins.xyz",
     "rickys-data.today"
   ]
 }
