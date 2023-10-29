@@ -8,7 +8,7 @@ variable "cloudfront_default_root_object" {
 
 variable "cloudfront_aliases" {
   type    = list(string)
-  default = [ "*.rickys-data.today", "rickys-data.today"]
+  default = [ "*.ricardosantins.xyz", "www.ricardosantins.xyz", "*.rickys-data.today", "rickys-data.today"]
 }
 
 variable "cloudfront_viewer_protocol_policy" {
